@@ -1,8 +1,8 @@
 # CAPCOM: Storm Watch
 
 A NASA Space Apps Challenge 2026 entry for **Build a Junior Astronaut Mission Trainer**.
-Kids aged 7–12 play CAPCOM, the person who talks to the crew by radio. Real solar storms from NASA records hit
-imagined bases on the Moon and Mars. Players weigh radiation shielding, power, food, communication delay
+Kids aged 7–12 play CAPCOM, the person who talks to the crew by radio. Real space weather from NASA records
+(solar storms on the Moon, a planet-wide dust storm on Mars) hits imagined bases. Players weigh radiation shielding, power, food, communication delay
 and mission goals, and every choice has a cost.
 
 | Level | Real event (NASA DONKI) | What the player learns |
@@ -10,11 +10,15 @@ and mission goals, and every choice has a cost.
 | 0 | Real Moon (LRO colour + LOLA elevation), the nine Artemis III south-pole regions | Choosing a base site: sunlight and power vs. ice vs. easy landing and radio |
 | 1 | 10 Sept 2017, X8.2 flare | Fast particles arrive in minutes, so get the crew under thick walls |
 | 2 | 10–13 May 2024, G5 storm, two waves | Long storms: shelter mass vs. running out of power, waiting out the second wave |
-| 3 | 3 Oct 2024, X9.0 flare | A rover far from home, a stuck wheel, a greenhouse that needs power |
-| 4 | 20 May 2024, X12 (estimated), Mars | A 12-minute radio delay: write flight rules in advance |
+| 3 | 23 July 2012 near miss (~3,000 km/s, missed Earth) | Read NASA's real forecast map, power the greenhouse (food), then a labelled "what if" |
+| 4 | June 2018 global dust storm, Mars (Opportunity's last signal) | Solar power vs. life support, and a 12-minute radio delay: write rules in advance |
+
+Levels open in order: pass one (crew safe) to unlock the next. A short How to play screen comes before Level 1.
 
 The storms and their dates are real archived NASA data. The crews, bases and meter numbers are part of the game
 (**game points**, not real measurements), and the game says so on screen.
+
+**Full explanation from A to Z: [docs/PROJECT_GUIDE.md](docs/PROJECT_GUIDE.md).**
 
 ## Project structure
 

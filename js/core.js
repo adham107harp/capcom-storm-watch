@@ -15,9 +15,12 @@ window.CC = window.CC || {};
     l1Video: 'assets/media/l1_x8.webm',
     l2Belts: 'assets/media/l2_belts.jpg',
     l2Aurora: 'assets/media/l2_aurora.webm',
-    l3Flare: 'assets/media/l3_x9.jpg',
-    l4Snow: 'assets/media/l4_snow.jpg',
-    l4Maven: 'assets/media/l4_maven.webm',
+    l3Stereo: 'assets/media/l3_stereo.webm',
+    l3Map: 'assets/media/l3_map.jpg',
+    l3Enlil: 'assets/media/l3_enlil.webm',
+    l3Cme: 'assets/media/l3_cme.jpg',
+    l4Dark: 'assets/media/l4_dark.jpg',
+    l4Globe: 'assets/media/l4_globe.jpg',
     solModel: 'assets/models/sol.glb'
   };
   var blobCache = {};
@@ -49,9 +52,9 @@ window.CC = window.CC || {};
 
   /* ---------- base sites (Level 0) ---------- */
   CC.SITES = {
-    sunny:  { name: 'Sunny ridge',     good: 'Lots of sun = lots of power', bad: 'Far from icy craters', fx: 'Power 95 · Mission goal 2', apply: function (g) { g.power = 95; g.goal = 2; } },
-    crater: { name: 'Shadowed crater', good: 'Ice and big science',         bad: 'Less sun = less power', fx: 'Power 60 · Mission starts at 1', apply: function (g) { g.power = 60; g.mission = 1; g.goal = 2; } },
-    plain:  { name: 'Flat plain',      good: 'Safe landing, short drives',  bad: 'Low Earth = weak radio', fx: 'Power 80 · Shorter drives', apply: function (g) { g.power = 80; g.driveScale = 0.75; g.radioDrop = true; } }
+    sunny:  { name: 'Sunny ridge',     good: 'Lots of sun = lots of power', bad: 'Far from icy craters', fx: 'Start power 95 · Need 2 mission stars', apply: function (g) { g.power = 95; g.goal = 2; } },
+    crater: { name: 'Shadowed crater', good: 'Ice and big science',         bad: 'Less sun = less power', fx: 'Start power 60 · 1 mission star free', apply: function (g) { g.power = 60; g.mission = 1; g.goal = 2; } },
+    plain:  { name: 'Flat plain',      good: 'Safe landing, short drives',  bad: 'Low Earth = weak radio', fx: 'Start power 80 · Drives 25% shorter · Radio static', apply: function (g) { g.power = 80; g.driveScale = 0.75; g.radioDrop = true; } }
   };
   CC.REGIONS = ['Peak near Cabeus B', 'Haworth', 'Malapert Massif', 'Mons Mouton Plateau', 'Mons Mouton', 'Nobile Rim 1', 'Nobile Rim 2', 'de Gerlache Rim 2', 'Slater Plain'];
 

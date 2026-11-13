@@ -5,7 +5,7 @@
 
   CC.level2 = function () {
     var G = CC.startLevel(2, 'Level 2 · May 2024 · ' + CC.SITES[CC.G.site].name);
-    G.clockMode = 'day'; G.day = 1; G.limit = 40; G.goal = 2; G.mission = Math.min(G.mission, 1);
+    G.clockMode = 'day'; G.day = 1; G.limit = 30; G.goal = 2; G.mission = Math.min(G.mission, 1);
     G.roverProg = 1; G.crewOut = false;
     CC.hud();
     CC.World.shot('sun'); CC.World.flare(); CC.boom(); CC.sfx('BOOM!');
@@ -13,7 +13,7 @@
     CC.say(['l2_1', ['l2_2', function () { CC.sfx(null); }], 'l2_3', ['l2_4', function () { CC.card(null); CC.World.shot('wide'); }]], day1);
   };
 
-  function drain() { var G = CC.G; G.power -= 12; if (G.power <= 0) { G.power = 0; G.failPower = true; } CC.hud(); }
+  function drain() { var G = CC.G; G.power -= 15; if (G.power <= 0) { G.power = 0; G.failPower = true; } CC.hud(); }
 
   function day1() {
     var G = CC.G; G.day = 1; CC.World.sunDay(1); CC.hud();
@@ -32,7 +32,7 @@
     var G = CC.G;
     G.day = 2; CC.World.sunDay(2); G.samiOutside = false; G.inside = true;
     CC.World.storm(true); CC.boom(); CC.sfx('WAVE 1!'); $('stage').classList.add('impact');
-    G.dose += Math.round(14 / (1 + G.shield)) + Math.floor(Math.random() * 3);
+    G.dose += Math.round(16 / (1 + G.shield)) + Math.floor(Math.random() * 3);
     drain();
     CC.say([['l2_w1', function () { CC.sfx(null); }]], function () {
       CC.World.storm(false); $('stage').classList.remove('impact');
@@ -80,7 +80,7 @@
   function wave2() {
     var G = CC.G;
     CC.World.storm(true); CC.boom(); CC.sfx('SURPRISE!'); $('stage').classList.add('impact');
-    G.dose += G.choice4 === 'out' ? 20 : G.choice4 === 'short' ? 8 : Math.round(8 / (1 + G.shield));
+    G.dose += G.choice4 === 'out' ? 24 : G.choice4 === 'short' ? 12 : Math.round(10 / (1 + G.shield));
     CC.hud();
     CC.say([['l2_w3', function () { CC.sfx(null); }]], function () { G.samiOutside = false; G.inside = true; end(); });
   }

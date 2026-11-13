@@ -6,8 +6,15 @@
   CC.startGame = function () {
     CC.hush(); $('ovTitle').hidden = true;
     if (CC.Sol) CC.Sol.mood('wave');
+    $('skipIntro').hidden = false;
+    $('skipIntro').onclick = skipIntro;
     CC.say(['t_1', 't_2', 't_3'], CC.level0);
   };
+  /* Skip the welcome and the Moon fly-in: straight to picking a site. */
+  function skipIntro() {
+    CC.cancelTalk(); $('skipIntro').hidden = true;
+    CC.World.mode('surface'); CC.World.setSite(CC.G.site); CC.World.shot('site'); CC.siteScreen();
+  }
 
   CC.level0 = function () {
     CC.G.lvl = 0;
@@ -18,6 +25,7 @@
   };
 
   CC.siteScreen = function () {
+    $('skipIntro').hidden = true;
     CC.hideOverlays(); CC.card(null); $('hud').hidden = true;
     var ov = $('ovSite'); ov.hidden = false;
     $('names').innerHTML = CC.REGIONS.map(function (n, i) { return '<span style="animation-delay:' + (i * 0.06) + 's">' + n + '</span>'; }).join('');

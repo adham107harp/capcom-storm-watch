@@ -7,11 +7,11 @@ CC.LINES={
  ],
  "t_2": [
   "nour",
-  "And I'm Nour, junior astronaut! These solar storms really happened."
+  "And I'm Nour, junior astronaut! These space storms really happened."
  ],
  "t_3": [
   "sol",
-  "Our Moon crew is pretend, but the Sun's data is real. Let's keep them safe, CAPCOM!"
+  "Our crews are pretend, but NASA's data is real. Let's keep them safe, CAPCOM!"
  ],
  "s_1": [
   "sol",
@@ -233,10 +233,6 @@ CC.LINES={
   "lina",
   "Packing the shelter with food, water and batteries. Long nights ahead!"
  ],
- "l2_c1_sol_say": [
-  "nour",
-  "SOL, how many waves are coming?"
- ],
  "l2_c1_sol": [
   "sol",
   "Checking NASA's DONKI list. I count several fast clouds. Expect more than one wave!"
@@ -333,113 +329,9 @@ CC.LINES={
   "sol",
   "Beep! Tickles!"
  ],
- "l3_1": [
-  "sol",
-  "Level three! Look at this. NASA's SDO caught a giant X9 flare on the third of October, 2024. The biggest of this solar cycle at that time!"
- ],
- "l3_2": [
-  "nour",
-  "Whoa, it's so bright!"
- ],
- "l3_3": [
-  "sol",
-  "Fun fact! Sunlight takes about eight minutes to reach us. So we see a flash about eight minutes after it happens."
- ],
- "l3_4": [
-  "sol",
-  "Six days later, on the ninth of October, another eruption sent super-fast particles our way. NASA saw them less than two hours later."
- ],
- "l3_5": [
-  "sol",
-  "Sami is ten kilometers away at the crater rim. The particles come in 98 minutes. Go, go, go!"
- ],
- "l3_c1_q": [
-  "lina",
-  "CAPCOM, Sami is at the crater rim. The drive home takes seventy minutes."
- ],
- "l3_c1_now": [
-  "sami",
-  "Turning around! Hold on to your helmets."
- ],
- "l3_c1_cabin": [
-  "sami",
-  "Parking and staying in the cabin. It's cozy in here."
- ],
- "l3_c1_cabin_sol": [
-  "sol",
-  "The cabin walls stop some particles. A real shelter stops more."
- ],
- "l3_c1_more": [
-  "sami",
-  "Twenty more minutes of rocks? Best. Day. Ever!"
- ],
- "l3_n1_say": [
-  "nour",
-  "Tell Sami to drive super fast!"
- ],
- "l3_n1_sol": [
-  "sol",
-  "Moon rovers drive slowly on purpose. Rocks and craters are everywhere. Crash, and you're stuck!"
- ],
- "l3_c2_q": [
-  "sami",
-  "Uh oh. A wheel is stuck in soft dust!"
- ],
- "l3_c2_push": [
-  "sami",
-  "Hopping out to push. Dust everywhere!"
- ],
- "l3_c2_winch": [
-  "lina",
-  "Left, left, a little more... You're free!"
- ],
- "l3_c2_wait": [
-  "sami",
-  "I'll wait in the cabin until the storm passes. I brought snacks."
- ],
- "l3_c3_q": [
-  "lina",
-  "Power is tight. I can run the shelter or the greenhouse lamps. The lettuce needs light!"
- ],
- "l3_c3_shelter": [
-  "lina",
-  "Sorry, lettuce. People first!"
- ],
- "l3_c3_green": [
-  "lina",
-  "Lamps stay on. I'll check the plants, then hurry back."
- ],
- "l3_c3_half": [
-  "lina",
-  "Dim lamps and half shelter power. Tricky, but okay."
- ],
  "l3_c3_sol": [
   "sol",
   "Real science! NASA grows plants on the Space Station, like chile peppers. Plants need light, and light needs power."
- ],
- "l3_i_home": [
-  "sol",
-  "Sami made it home! The shelter kept the dose small."
- ],
- "l3_i_cabin": [
-  "sol",
-  "Sami rode out the storm in the rover cabin. Some dose, but not bad."
- ],
- "l3_i_out": [
-  "sol",
-  "Ouch! Sami was outside when the particles hit."
- ],
- "l3_d_fact": [
-  "sol",
-  "What really happened: On the third of October 2024, NASA's SDO filmed an X9 flare. On the ninth, very fast particles arrived less than two hours after an eruption. Plan before you leave the base!"
- ],
- "l3_end_win": [
-  "nour",
-  "Sami's home safe, and the rocks too!"
- ],
- "l3_end_lose": [
-  "nour",
-  "That was a tough race. Let's plan the route better!"
  ],
  "l4_1": [
   "sol",
@@ -447,31 +339,31 @@ CC.LINES={
  ],
  "l4_2": [
   "sol",
-  "On the twentieth of May 2024, the Sun fired a huge flare, later estimated as X12. And Mars was in the way!"
+  "In June 2018, a dust storm grew until it covered the whole planet!"
  ],
  "l4_3": [
   "nour",
-  "Can't we just tell the crew what to do?"
+  "A dust storm? Is that dangerous?"
  ],
  "l4_4": [
   "sol",
-  "Not quickly! Radio takes minutes to reach Mars. Up to about twenty two minutes one way. In this mission, it takes twelve."
+  "Our Mars base runs on solar panels. No sunlight means no power. And power keeps the air and heat on!"
  ],
  "l4_5": [
   "sol",
-  "So before the storm, we write three flight rules. Doctor Omar will follow them on his own."
+  "Radio takes twelve minutes to reach Mars in this mission. So we write three rules now. Doctor Omar will follow them on his own."
  ],
  "l4_r1_q": [
   "sol",
-  "Rule one. If the particles rise, Omar should..."
+  "Rule one. When the sky gets dark, Omar should..."
  ],
  "l4_r2_q": [
   "sol",
-  "Rule two. If power runs low, Omar should..."
+  "Rule two. When power is short, what gets power first?"
  ],
  "l4_r3_q": [
   "sol",
-  "Rule three. If the radio relay goes quiet, Omar should..."
+  "Rule three. If the battery gets very low, Omar should..."
  ],
  "l4_nour_r": [
   "nour",
@@ -480,18 +372,6 @@ CC.LINES={
  "l4_go": [
   "sol",
   "Rules sent! They travel to Mars for twelve minutes. Let's watch."
- ],
- "l4_e1": [
-  "omar",
-  "Mission Control, this is Omar. The rover cameras are full of white snow! Following rule one."
- ],
- "l4_e2": [
-  "omar",
-  "Power is dropping fast. Following rule two."
- ],
- "l4_e3": [
-  "omar",
-  "The relay went quiet. Following rule three."
  ],
  "l4_send_q": [
   "sol",
@@ -505,21 +385,17 @@ CC.LINES={
   "sol",
   "By the time it arrived, Omar had already decided. That's why good rules matter!"
  ],
- "l4_relay": [
-  "sol",
-  "Real fact! During this storm, the Mars Odyssey orbiter's star camera was knocked out, and it came back within an hour."
- ],
  "l4_safe": [
   "omar",
-  "We're all in the shelter, and the dose is low. Thanks for the great rules, Earth!"
+  "The dust is clearing and we still have power. Thanks for the great rules, Earth!"
  ],
  "l4_hurt": [
   "omar",
-  "We took a bigger dose than we wanted. Next time, better rules."
+  "The power ran out, and the heaters stopped. We had to call for rescue. Next time, better rules."
  ],
  "l4_d_fact": [
   "sol",
-  "What really happened: Curiosity measured that an astronaut next to the rover would have received 8,100 micrograys. That's like 30 chest X-rays. Its cameras filled with snow from particles, and NASA's MAVEN saw auroras over the whole planet. Mars has no global magnetic field, so crews need shelters and good rules."
+  "What really happened: NASA's Opportunity rover ran on solar power. It sent its last signal on the tenth of June 2018. NASA listened for months, but the storm had ended its mission. It worked for almost fifteen years, but it was built for just ninety days!"
  ],
  "l4_end_win": [
   "nour",
@@ -527,11 +403,11 @@ CC.LINES={
  ],
  "l4_end_lose": [
   "nour",
-  "Mars is tough. Let's write smarter rules!"
+  "The dark won this time. Let's write smarter rules!"
  ],
  "cert": [
   "sol",
-  "Congratulations, CAPCOM! You kept every crew safe from real solar storms. Beep boop, I'm so proud!"
+  "Congratulations, CAPCOM! You kept every crew safe from real space weather. Beep boop, I'm so proud!"
  ],
  "t_dose": [
   "sol",
@@ -560,5 +436,165 @@ CC.LINES={
  "osdr_l2": [
   "sol",
   "Real science from NASA's open data library, OSDR. Scientists study how space radiation can damage cells. That's why we keep the dose low!"
+ ],
+ "l4_d1": [
+  "omar",
+  "Sol one. The sky is turning orange and dim. Following rule one."
+ ],
+ "l4_d2": [
+  "omar",
+  "Sol two. The Sun is just a fuzzy dot now. Our solar power is dropping."
+ ],
+ "l4_d3": [
+  "omar",
+  "Sol three. It's dark like night, even at noon! Following rule two."
+ ],
+ "l4_d4": [
+  "omar",
+  "Sol four. Still dark. Almost no power from the panels."
+ ],
+ "l4_d5": [
+  "omar",
+  "Sol five. The dust is settling. I can see the Sun again!"
+ ],
+ "l4_sleep": [
+  "omar",
+  "Battery very low! Rule three. Everything is off except the heaters and a clock. We'll wake up to check."
+ ],
+ "l4_radio": [
+  "omar",
+  "Battery very low! Rule three. The radio stays on to call Earth, but it uses a lot of power."
+ ],
+ "l4_nuke": [
+  "omar",
+  "Battery very low! Rule three. We're driving to the nuclear rover. It makes power without any sunlight."
+ ],
+ "l4_curio": [
+  "sol",
+  "Real fact! NASA's Curiosity rover kept working all through this storm. It runs on nuclear power, not sunlight."
+ ],
+ "rules_1": [
+  "sol",
+  "Quick rules! Keep the dose low, keep the power on, and read each card's cost before you tap!"
+ ],
+ "l3_1": [
+  "sol",
+  "Level three! The twenty-third of July, 2012."
+ ],
+ "l3_2": [
+  "sol",
+  "NASA's STEREO-A spacecraft watched the Sun throw out one of the fastest clouds ever seen. About three thousand kilometers per second!"
+ ],
+ "l3_3": [
+  "nour",
+  "Look at all those white scratches on the video!"
+ ],
+ "l3_4": [
+  "sol",
+  "Those are fast particles hitting STEREO-A's camera. The cloud went right over it."
+ ],
+ "l3_5": [
+  "sol",
+  "But which way is it going? Toward our Moon base, or away? You decide what the crew does first."
+ ],
+ "l3_c1_q": [
+  "sol",
+  "The forecast from Earth is not ready yet. What should the crew do now?"
+ ],
+ "l3_c1_hide": [
+  "sami",
+  "Everybody into the shelter! The greenhouse will have to wait."
+ ],
+ "l3_c1_ask": [
+  "lina",
+  "Calling Earth for the forecast. The space weather team is on it!"
+ ],
+ "l3_c1_work": [
+  "sami",
+  "We'll keep working, but I'll keep one eye on the sky."
+ ],
+ "l3_map": [
+  "sol",
+  "The forecast is here! This is NASA's real computer model of the cloud. The Sun is in the middle. The red is the cloud."
+ ],
+ "l3_c2_q": [
+  "sol",
+  "Find the little blue Earth near the bottom. Our Moon is right next to it. Is the red cloud coming to us?"
+ ],
+ "l3_c2_away": [
+  "sol",
+  "Right! The cloud is going the other way, toward STEREO-A. Back to work!"
+ ],
+ "l3_c2_hide": [
+  "sol",
+  "Hmm, the cloud was going the other way. Hiding cost power and time for nothing."
+ ],
+ "l3_n_say": [
+  "nour",
+  "SOL, how do I read this map?"
+ ],
+ "l3_n_sol": [
+  "sol",
+  "Find the blue Earth dot. Then see where the red cloud is pointing. Red near Earth means trouble. Red far away means we're okay!"
+ ],
+ "l3_c3_q": [
+  "lina",
+  "It's harvest week in the greenhouse! The plant lamps need power. How bright?"
+ ],
+ "l3_c3_full": [
+  "lina",
+  "Full lamps! Big, crunchy lettuce for everyone."
+ ],
+ "l3_c3_half": [
+  "lina",
+  "Half lamps. Smaller crops, but we save power."
+ ],
+ "l3_c3_off": [
+  "lina",
+  "Lamps off. The plants will droop, and we'll eat stored food."
+ ],
+ "l3_whatif": [
+  "sol",
+  "Now, a what if! NASA scientists said: if this cloud had left one week earlier, Earth would have been in its path."
+ ],
+ "l3_whatif2": [
+  "sol",
+  "Let's practice. Imagine it's aimed at our Moon base. Fast particles could arrive in minutes! Quick, build the shelter!"
+ ],
+ "l3_w_water": [
+  "lina",
+  "Water bags stacked! Water is great at stopping particles."
+ ],
+ "l3_w_food": [
+  "sami",
+  "Food boxes stacked. Not as thick, but it helps."
+ ],
+ "l3_w_dirt": [
+  "lina",
+  "I'm shoveling Moon dirt on the roof. Hurry, hurry!"
+ ],
+ "l3_w_none": [
+  "sami",
+  "It missed us last time. It'll miss us again, right?"
+ ],
+ "l3_i_ok": [
+  "sol",
+  "The pretend storm hits. Good walls! The crew is okay."
+ ],
+ "l3_i_bad": [
+  "sol",
+  "The pretend storm hits. Ouch! Too many particles got through."
+ ],
+ "l3_end_win": [
+  "nour",
+  "Great forecasting, CAPCOM! You didn't panic, and you were ready."
+ ],
+ "l3_end_lose": [
+  "nour",
+  "Forecasts are tricky. Let's try again!"
+ ],
+ "l3_d_fact": [
+  "sol",
+  "What really happened: the July 2012 cloud missed Earth and the Moon. NASA scientists said it was at least as strong as the biggest storm ever recorded, back in 1859. That's why NASA watches the Sun every day."
  ]
 };

@@ -6,7 +6,7 @@
   function startLevel(lvl, label) {
     CC.cancelTalk(); CC.hideOverlays(); CC.hideArrow();
     var G = CC.reset(lvl);
-    $('hud').hidden = false; $('lvlName').textContent = label;
+    $('hud').hidden = false; $('mD').hidden = false; $('lvlName').textContent = label;
     CC.World.mode('surface');
     if (G.planet === 'mars') CC.World.setPlanet('mars'); else CC.World.setSite(G.site);
     CC.World.reset();
@@ -69,9 +69,9 @@
     G.impacted = true; G.running = false; G.clock = 0; G.inside = !G.crewOut;
     CC.cancelTalk(); $('answers').hidden = true; CC.hideArrow(); CC.clearIdle();
     var hit, r;
-    if (G.crewOut) { hit = 34; r = 'i_r_out'; }
-    else if (G.linaOut > 0) { hit = 26; r = 'i_r_out'; }
-    else { hit = Math.round(16 / (1 + G.shield)); r = G.shield === 0 ? 'i_r_none' : G.shield === 1 ? 'i_r_med' : 'i_r_strong'; }
+    if (G.crewOut) { hit = 40; r = 'i_r_out'; }
+    else if (G.linaOut > 0) { hit = 34; r = 'i_r_out'; }
+    else { hit = Math.round(30 / (1 + G.shield)); r = G.shield === 0 ? 'i_r_none' : G.shield === 1 ? 'i_r_med' : 'i_r_strong'; }
     G.dose += hit; G.power -= 10; CC.hud();
     CC.World.shot('wide'); CC.World.storm(true); CC.boom(); CC.sfx(G.crewOut || G.linaOut > 0 ? 'ZZZAP!' : 'FZZT!'); $('stage').classList.add('impact');
     CC.say([G.crewOut ? 'i_out' : 'i_in', [r, function () { CC.sfx(null); }]], function () {

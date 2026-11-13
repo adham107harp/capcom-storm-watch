@@ -17,30 +17,50 @@
     CC.G = CC.reset(0); CC.World.setPlanet('moon'); CC.World.setSite(CC.G.site); CC.World.mode('surface'); CC.World.shot('wide');
     var S = CC.SAVE, total = S.l1 + S.l2 + S.l3 + S.l4;
     var lv = [
-      [1, 'Level 1 · Sept 2017 · Moon'],
-      [2, 'Level 2 · May 2024 · Moon'],
-      [3, 'Level 3 · Oct 2024 · Moon'],
-      [4, 'Level 4 · May 2024 · Mars']
+      [1, 'Level 1 · Sept 2017 · Moon', 'Get Sami home before the particles hit'],
+      [2, 'Level 2 · May 2024 · Moon', 'Last four days of storm waves'],
+      [3, 'Level 3 · July 2012 · Moon', 'Read the forecast, feed the crew'],
+      [4, 'Level 4 · June 2018 · Mars', 'Keep the power on in a dust storm']
     ];
     CC.overlay('<p class="kicker">Base: ' + CC.SITES[CC.G.site].name + ' · Total stars ' + total + ' of 12</p>' +
       '<h2 class="big mid">Choose a storm</h2>' +
       '<div class="levels">' + lv.map(function (l) {
         var open = CC.unlocked(l[0]);
         return '<button class="lvbtn' + (open ? '' : ' locked') + '" type="button" id="lv' + l[0] + '"' + (open ? '' : ' disabled aria-disabled="true"') + '><span>' + l[1] +
-          (open ? '' : '<small>Pass Level ' + (l[0] - 1) + ' to unlock</small>') + '</span><b>' + (open ? CC.stars(S['l' + l[0]]) : '🔒') + '</b></button>';
+          '<small>' + (open ? l[2] : 'Pass Level ' + (l[0] - 1) + ' to unlock') + '</small>' + '</span><b>' + (open ? CC.stars(S['l' + l[0]]) : '🔒') + '</b></button>';
       }).join('') + '</div>' +
-      '<div class="row"><button class="go alt sm" type="button" id="lvLive">Today’s real Sun (LIVE)</button><button class="go alt sm" type="button" id="lvAbout">About the data</button><button class="go alt sm" type="button" id="lvSite">Change site</button>' +
+      '<div class="row"><button class="go alt sm" type="button" id="lvRules">How to play</button><button class="go alt sm" type="button" id="lvLive">Today’s real Sun (LIVE)</button><button class="go alt sm" type="button" id="lvAbout">About the data</button><button class="go alt sm" type="button" id="lvSite">Change site</button>' +
       (total ? '<button class="go alt sm" type="button" id="lvReset">Start over</button>' : '') +
       (CC.allPassed() ? '<button class="go alt sm" type="button" id="lvCert">My certificate</button>' : '') + '</div>' +
       '<div id="resetAsk"></div>' +
       (S.l1 ? '' : '<p class="credit">Start with Level 1. Pass a level to open the next one.</p>'));
-    [1, 2, 3, 4].forEach(function (n) { if (CC.unlocked(n)) $('lv' + n).onclick = CC['level' + n]; });
+    [1, 2, 3, 4].forEach(function (n) { if (CC.unlocked(n)) $('lv' + n).onclick = n === 1 && !rulesSeen() ? function () { CC.rulesScreen(CC.level1); } : CC['level' + n]; });
+    $('lvRules').onclick = function () { CC.rulesScreen(CC.levelMenu); };
     $('lvLive').onclick = CC.liveScreen; $('lvAbout').onclick = CC.aboutScreen;
     $('lvSite').onclick = function () { CC.hideOverlays(); CC.World.shot('site'); CC.siteScreen(); };
     if ($('lvCert')) $('lvCert').onclick = CC.certificate;
     if ($('lvReset')) $('lvReset').onclick = askReset;
     var next = [1, 2, 3, 4].filter(function (n) { return CC.unlocked(n) && !S['l' + n]; })[0];
     if (next) CC.pointAt($('lv' + next));
+  };
+
+  /* How to play: four short rules, shown before the first Level 1 and from the menu. */
+  function rulesSeen() { try { return CC.rulesOk || localStorage.getItem('capcom_rules') === '1'; } catch (e) { return CC.rulesOk; } }
+  CC.rulesScreen = function (then) {
+    CC.cancelTalk(); CC.hideArrow(); CC.rulesOk = true;
+    try { localStorage.setItem('capcom_rules', '1'); } catch (e) { /* ignore */ }
+    var DOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="#0b0f1a" stroke-width="2.4"><circle cx="12" cy="12" r="2.5" fill="#0b0f1a"/><path d="M12 3a9 9 0 0 1 7.8 4.5L14.6 10.5M4.2 7.5A9 9 0 0 1 12 3M12 21a9 9 0 0 1-7.8-4.5l5.2-3M19.8 16.5A9 9 0 0 1 12 21"/></svg>';
+    var BOLT = '<svg viewBox="0 0 24 24" fill="#0b0f1a"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg>';
+    var CARD = '<svg viewBox="0 0 40 40">' + CC.ICON.ask + '</svg>';
+    CC.overlay('<p class="kicker">Before you play</p><h2 class="big mid">How to play</h2><ul class="rules">' +
+      '<li><span class="ri" style="--c:var(--dose)">' + DOSE + '</span><span><b>Dose</b> is radiation the crew soaks up. Keep it <b>left of the white line</b>.</span></li>' +
+      '<li><span class="ri" style="--c:var(--power)">' + BOLT + '</span><span><b>Power</b> runs the air and heat. If it hits <b>0</b>, you lose.</span></li>' +
+      '<li><span class="ri" style="--c:var(--paper)">' + CARD + '</span><span>Every card has a <b>cost</b>. Read the little tags before you tap.</span></li>' +
+      '<li><span class="ri" style="--c:var(--mission)"><b class="rs">★</b></span><span>Crew safe = <b>★</b>. Power left = <b>★★</b>. Mission done = <b>★★★</b>. Pass a level to open the next.</span></li>' +
+      '</ul><div class="row"><button class="go" type="button" id="rulesGo">Got it!</button></div>');
+    $('rulesGo').onclick = function () { CC.hush(); then(); };
+    CC.pointAt($('rulesGo'));
+    CC.say(['rules_1']);
   };
 
   /* Start over: asked on the page itself (browser confirm boxes are not used). */
@@ -72,7 +92,7 @@
     var ov = CC.overlay('<div class="deb"><div class="debm">' + o.media + '</div><div class="debt">' +
       '<h2>' + (safe ? 'Crew safe!' : G.failPower ? 'Power out!' : 'Too much radiation') + '</h2>' +
       '<div class="starrow" aria-label="' + stars + ' of 3 stars"><span class="' + (stars > 0 ? 'on' : '') + '">★</span><span class="' + (stars > 1 ? 'on' : '') + '">★</span><span class="' + (stars > 2 ? 'on' : '') + '">★</span></div>' +
-      '<div class="score"><b>Your game points</b><span>Dose ' + Math.round(G.dose) + ' (limit ' + G.limit + ')</span><span>Power ' + Math.max(0, Math.round(G.power)) + '</span><span>Mission ' + G.mission + ' of ' + G.goal + '</span><em>Game points come from your choices. They are not real measurements.</em></div>' +
+      '<div class="score"><b>Your game points</b>' + (o.noDose ? '' : '<span>Dose ' + Math.round(G.dose) + ' (limit ' + G.limit + ')</span>') + '<span>Power ' + Math.max(0, Math.round(G.power)) + '</span><span>Mission ' + G.mission + ' of ' + G.goal + '</span><em>Game points come from your choices. They are not real measurements.</em></div>' +
       '<p class="tip"><b>SOL:</b> ' + tip + '</p>' +
       '<div class="real"><b>What really happened · real NASA data</b>' + o.fact + '</div>' +
       '<div class="row">' + (safe ? '<button class="go" type="button" id="nextB">' + o.next[0] + '</button><button class="go alt" type="button" id="again">Play again</button>'
@@ -92,7 +112,7 @@
     CC.cancelTalk(); CC.World.setPlanet('moon'); CC.World.setSite(CC.G.site); CC.World.shot('wide');
     var S = CC.SAVE, total = S.l1 + S.l2 + S.l3 + S.l4;
     CC.overlay('<div class="cert"><p class="kicker">Junior Astronaut Mission Trainer</p><h2 class="big mid">CAPCOM Certified!</h2>' +
-      '<p class="certtxt">You guided crews through four real solar storms from NASA records: September 2017, May 2024, October 2024, and the May 2024 storm at Mars.</p>' +
+      '<p class="certtxt">You guided crews through four real space weather events from NASA records: the solar storms of September 2017 and May 2024 and the July 2012 near miss on the Moon, and the 2018 dust storm that covered all of Mars.</p>' +
       '<p class="certstars">' + total + ' of 12 stars</p>' +
       '<div class="row"><button class="go" type="button" id="cMenu">All levels</button><button class="go alt" type="button" id="cAbout">About the data</button></div></div>');
     $('cMenu').onclick = CC.levelMenu; $('cAbout').onclick = CC.aboutScreen;
@@ -135,9 +155,10 @@
       '<tr><td><a href="https://osdr.nasa.gov/" target="_blank" rel="noopener">OSDR</a> (Open Science Data Repository)</td><td>Real studies on space radiation and cells (OSD-340) and plants grown in space (OSD-772)</td></tr>' +
       '<tr><td><a href="https://svs.gsfc.nasa.gov/4720" target="_blank" rel="noopener">CGI Moon Kit</a> (LRO colour, LOLA elevation)</td><td>The real 3D Moon in Level 0</td></tr>' +
       '<tr><td><a href="https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/" target="_blank" rel="noopener">Artemis III landing regions</a></td><td>The nine real south-pole site names</td></tr>' +
-      '<tr><td><a href="https://svs.gsfc.nasa.gov/12706" target="_blank" rel="noopener">SDO</a> via NASA SVS</td><td>Real videos and stills of the 2017 and 2024 flares</td></tr>' +
+      '<tr><td><a href="https://svs.gsfc.nasa.gov/12706" target="_blank" rel="noopener">SDO</a> via NASA SVS</td><td>Real video of the September 2017 flare</td></tr>' +
+      '<tr><td><a href="https://svs.gsfc.nasa.gov/4177/" target="_blank" rel="noopener">STEREO-A</a> and <a href="https://svs.gsfc.nasa.gov/4167/" target="_blank" rel="noopener">CCMC Enlil model</a> (NASA SVS), <a href="https://science.nasa.gov/science-news/science-at-nasa/2014/23jul_superstorm/" target="_blank" rel="noopener">NASA Science</a></td><td>Level 3: the July 2012 cloud, its speed and the real forecast map</td></tr>' +
       '<tr><td><a href="https://svs.gsfc.nasa.gov/14835/" target="_blank" rel="noopener">NASA SVS: May 2024 storm</a></td><td>Aurora video and the two new radiation belts</td></tr>' +
-      '<tr><td><a href="https://www.jpl.nasa.gov/news/nasa-watches-mars-light-up-during-epic-solar-storm/" target="_blank" rel="noopener">Curiosity RAD, MAVEN, Odyssey</a></td><td>The real Mars dose, camera “snow” and auroras in Level 4</td></tr>' +
+      '<tr><td><a href="https://www.jpl.nasa.gov/news/opportunity-hunkers-down-during-dust-storm/" target="_blank" rel="noopener">NASA JPL: Opportunity and the 2018 dust storm</a>, PIA22521, PIA22487</td><td>Level 4: how dark the sky got (tau 10.8), Opportunity’s last signal, Curiosity’s nuclear power</td></tr>' +
       '<tr><td><a href="https://www.nasa.gov/missions/artemis/orion/scientists-and-engineers-evaluate-orion-radiation-protection-plan/" target="_blank" rel="noopener">Orion radiation protection</a> and <a href="https://science.nasa.gov/science-research/heliophysics/how-nasa-will-protect-astronauts-from-space-radiation-at-the-moon" target="_blank" rel="noopener">NASA Science</a></td><td>Why mass (water, food, Moon dirt) makes a shelter safer</td></tr>' +
       '<tr><td><a href="https://ntrs.nasa.gov/citations/20220013418" target="_blank" rel="noopener">NASA NTRS study</a></td><td>Mars radio delay of up to about 22 minutes one way</td></tr>' +
       '</tbody></table>' +

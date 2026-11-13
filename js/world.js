@@ -2,7 +2,7 @@
 (function (CC) {
   'use strict';
   var noop = function () {};
-  CC.World = { mode: noop, globeShot: noop, shot: noop, flare: noop, storm: noop, setSite: noop, setPlanet: noop, setRoute: noop, reset: noop, wave: noop, sunDay: noop, kickAt: noop };
+  CC.World = { mode: noop, globeShot: noop, shot: noop, flare: noop, storm: noop, setSite: noop, setPlanet: noop, setRoute: noop, reset: noop, wave: noop, sunDay: noop, kickAt: noop, dust: noop };
 
   CC.initWorld = function () {
     if (typeof THREE === 'undefined') return;
@@ -327,7 +327,17 @@
       flare: function () { flareT = clk.elapsedTime; },
       storm: function (on) { storm = on; if (on) { shakeT = 0.8; for (var j = 0; j < NP; j++) spawn(j, true); } },
       wave: function (who) { if (waveT[who] !== undefined) waveT[who] = clk.elapsedTime; },
-      reset: function () { storm = false; sunAz = 0; placeSun(); },
+      reset: function () { storm = false; sunAz = 0; placeSun(); if (PLANET === 'mars') CC.World.dust(0); },
+      /* Mars dust storm: tau 0 = normal sky, 11 = the Sun almost gone */
+      dust: function (tau) {
+        if (PLANET !== 'mars') return;
+        var f = 1 / (1 + tau * 0.45), c = new THREE.Color(0xc89a6c).multiplyScalar(0.3 + 0.7 * f);
+        sun.intensity = 1.5 * f; hemi.intensity = 0.45 * (0.45 + 0.55 * f);
+        S.background = c; S.fog = new THREE.Fog(c, 8 + 62 * f, 50 + 230 * f);
+        sunBall.scale.setScalar(0.65 * (0.4 + 0.6 * f)); halo.scale.set(55 * f + 10, 55 * f + 10, 1);
+        var pm = parts.material, dusty = tau > 0; /* blowing dust, not glowing particles */
+        pm.color.setHex(dusty ? 0x8a4f2c : 0xffb066); pm.blending = dusty ? THREE.NormalBlending : THREE.AdditiveBlending; pm.opacity = dusty ? 0.85 : 1; pm.needsUpdate = true;
+      },
       sunDay: function (d) { sunAz = (d - 1) * 0.21; placeSun(); },
       setRoute: function (fx, fz) { FAR.set(fx, 0, fz); },
       setSite: function (s) { SITE = s; PLANET = 'moon'; applyLook(); },
