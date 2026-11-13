@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CAPCOM: Storm Watch</title>
+  <meta name="description" content="A NASA Space Apps 2026 game for kids 7–12: guide a Moon and Mars crew through real solar storms from NASA data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap" id="app">
+  <main class="stage" id="stage">
+    <canvas id="gl" aria-label="3D view of the Moon or Mars, the imagined base and crew. Tap a crew member or the rover." role="img"></canvas>
+    <div class="vignette"></div><div class="snow"></div><div class="flash" id="flash"></div><div class="fade" id="fade"></div>
+
+    <div class="hud" id="hud" hidden>
+      <div class="hudl"><span class="lvl" id="lvlName"></span><span class="gp">Meters show game points, not real measurements</span></div>
+      <div class="meters">
+        <div class="m" id="mD" title="Crew radiation dose (game points). Keep it left of the white line."><svg viewBox="0 0 24 24" fill="none" stroke="#ff4f6d" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="2.5" fill="#ff4f6d"/><path d="M12 3a9 9 0 0 1 7.8 4.5L14.6 10.5M4.2 7.5A9 9 0 0 1 12 3M12 21a9 9 0 0 1-7.8-4.5l5.2-3M19.8 16.5A9 9 0 0 1 12 21"/></svg>Dose<span class="bar"><i id="mDose" style="background:var(--dose)"></i><em id="mLim"></em></span><small id="mDoseN"></small></div>
+        <div class="m" id="mP" title="Power (game points): runs air, heat, lights and radio."><svg viewBox="0 0 24 24" fill="none" stroke="#ffd23f" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg>Power<span class="bar"><i id="mPow" style="background:var(--power)"></i></span><small id="mPowN"></small></div>
+        <div class="m" id="mS" title="Extra shelter walls: more mass around the crew means less radiation."><svg viewBox="0 0 24 24" fill="none" stroke="#48d1ff" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/></svg>Shelter<span class="stars sh" id="mSh"></span></div>
+        <div class="m" id="mM" title="Mission goal: samples, repairs and science."><svg viewBox="0 0 24 24" fill="none" stroke="#7ee08a" stroke-width="2.4" aria-hidden="true"><path d="M5 20l4-14 4 9 3-5 3 10z"/></svg>Mission<span class="stars" id="mMis"></span></div>
+        <div class="clock"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34" stroke="#1c2748" stroke-width="8" fill="rgba(6,11,26,.8)"/><circle id="ring" cx="40" cy="40" r="34" stroke="#ffd23f" stroke-width="8" fill="none" stroke-dasharray="213.6" stroke-dashoffset="0" stroke-linecap="round"/></svg><b id="clockTxt" aria-live="off"></b></div>
+        <button class="tbtn" id="muteBtn" type="button" aria-pressed="false">Sound on</button>
+      </div>
+    </div>
+
+    <div id="cardBox"></div>
+    <div class="sfx" id="sfx" hidden></div>
+
+    <canvas id="solCv" aria-label="SOL the robot guide. Tap him!" role="img"></canvas>
+    <span class="plate">SOL</span>
+    <div class="quip" id="quip" hidden></div>
+    <div class="sub" id="sub" hidden aria-live="polite"></div>
+    <div class="answers" id="answers" hidden></div>
+
+    <section class="ov dim" id="ovTitle">
+      <div class="polaroid"><img src="assets/media/title_orion.jpg" id="titleImg" alt="NASA's Orion spacecraft passing the Moon during Artemis I"><p>Real photo: NASA's Orion near the Moon, Artemis I. Credit: NASA</p></div>
+      <p class="kicker">Junior Astronaut Mission Trainer</p>
+      <h1 class="big">CAPCOM:<br>Storm Watch</h1>
+      <p class="honest">Real solar storms. Real NASA data. Imagined crews on the Moon and Mars who need you.</p>
+      <div><button class="go" id="startBtn" type="button">Start mission</button></div>
+    </section>
+    <section class="ov" id="ovSite" hidden>
+      <p class="kicker">Level 0 · Moon south pole</p>
+      <h2 class="big mid">Pick your base site</h2>
+      <div class="names" id="names"></div>
+      <div class="sites" id="sites"></div>
+      <p class="credit">Moon: NASA LRO colour and LOLA elevation maps (CGI Moon Kit, NASA's Scientific Visualization Studio). Site names: <a href="https://www.nasa.gov/news-release/nasa-provides-update-on-artemis-iii-moon-landing-regions/" target="_blank" rel="noopener">NASA, 28 Oct 2024</a>. The three site types are game choices.</p>
+    </section>
+    <section class="ov dim" id="ovMenu" hidden></section>
+  </main>
+  <footer>Storms: NASA DONKI records (archived, with dates). Media: NASA SDO, NASA SVS, NASA JPL, NASA Artemis I. Crews, bases and meter numbers are part of the game. NASA does not endorse this game.</footer>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="vendor/GLTFLoader.js"></script>
+<script src="js/core.js"></script>
+<script src="js/data/lines.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/world.js"></script>
+<script src="js/sol.js"></script>
+<script src="js/levels/level0.js"></script>
+<script src="js/levels/level1.js"></script>
+<script src="js/levels/level2.js"></script>
+<script src="js/levels/level3.js"></script>
+<script src="js/levels/level4.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
