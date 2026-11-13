@@ -180,20 +180,26 @@
 
   /* ---------- pointing arrow (placed beside the target so it never covers text) ---------- */
   var arrowEl = null;
+  /* The arrow is placed after the target's entry animation ends, so it never lands on top of it. */
+  var arrowTok = 0;
   CC.pointAt = function (el) {
     CC.hideArrow();
     if (!el) return;
-    var r = el.getBoundingClientRect(), st = $('stage').getBoundingClientRect();
-    arrowEl = document.createElement('div');
-    arrowEl.className = 'arrow';
-    arrowEl.innerHTML = '<svg viewBox="0 0 54 54" aria-hidden="true"><path d="M50 27L26 8v12H4v14h22v12z" fill="#ffc21a" stroke="#0b0f1a" stroke-width="4" stroke-linejoin="round"/></svg>';
-    var leftRoom = r.left - st.left;
-    if (leftRoom > 64) { arrowEl.style.left = (r.left - st.left - 60) + 'px'; arrowEl.style.top = (r.top - st.top + r.height / 2 - 27) + 'px'; }
-    else { arrowEl.classList.add('down'); arrowEl.style.left = (r.left - st.left + r.width / 2 - 27) + 'px'; arrowEl.style.top = (r.top - st.top - 58) + 'px'; }
-    $('stage').appendChild(arrowEl);
-    if (CC.Sol) CC.Sol.mood('point');
+    var tok = arrowTok;
+    setTimeout(function () {
+      if (tok !== arrowTok || !el.isConnected || el.offsetParent === null) return;
+      var r = el.getBoundingClientRect(), st = $('stage').getBoundingClientRect();
+      arrowEl = document.createElement('div');
+      arrowEl.className = 'arrow';
+      arrowEl.innerHTML = '<svg viewBox="0 0 54 54" aria-hidden="true"><path d="M50 27L26 8v12H4v14h22v12z" fill="#ffc21a" stroke="#0b0f1a" stroke-width="4" stroke-linejoin="round"/></svg>';
+      var leftRoom = r.left - st.left;
+      if (leftRoom > 64) { arrowEl.style.left = (r.left - st.left - 60) + 'px'; arrowEl.style.top = (r.top - st.top + r.height / 2 - 27) + 'px'; }
+      else { arrowEl.classList.add('down'); arrowEl.style.left = (r.left - st.left + r.width / 2 - 27) + 'px'; arrowEl.style.top = (r.top - st.top - 58) + 'px'; }
+      $('stage').appendChild(arrowEl);
+      if (CC.Sol) CC.Sol.mood('point');
+    }, 700);
   };
-  CC.hideArrow = function () { if (arrowEl) { arrowEl.remove(); arrowEl = null; } };
+  CC.hideArrow = function () { arrowTok++; if (arrowEl) { arrowEl.remove(); arrowEl = null; } };
   window.addEventListener('resize', CC.hideArrow);
 
   /* ---------- cards and effects ---------- */
