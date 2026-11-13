@@ -8,26 +8,53 @@
     CC.World.mode('globe'); CC.World.globeShot('far');
   };
 
+  /* A level opens only after the one before it is passed (at least 1 star). Passed levels can be replayed any time. */
+  CC.unlocked = function (n) { return n === 1 || CC.SAVE['l' + (n - 1)] > 0; };
+  CC.allPassed = function () { return CC.SAVE.l1 > 0 && CC.SAVE.l2 > 0 && CC.SAVE.l3 > 0 && CC.SAVE.l4 > 0; };
+
   CC.levelMenu = function () {
     CC.cancelTalk(); CC.card(null); $('hud').hidden = true;
-    CC.G = CC.reset(0); CC.World.setSite(CC.G.site); CC.World.mode('surface'); CC.World.shot('wide');
+    CC.G = CC.reset(0); CC.World.setPlanet('moon'); CC.World.setSite(CC.G.site); CC.World.mode('surface'); CC.World.shot('wide');
     var S = CC.SAVE, total = S.l1 + S.l2 + S.l3 + S.l4;
     var lv = [
-      ['lv1', 'Level 1 · Sept 2017 · Moon', S.l1, true],
-      ['lv2', 'Level 2 · May 2024 · Moon', S.l2, true],
-      ['lv3', 'Level 3 · Oct 2024 · Moon', S.l3, true],
-      ['lv4', 'Level 4 · May 2024 · Mars', S.l4, true]
+      [1, 'Level 1 · Sept 2017 · Moon'],
+      [2, 'Level 2 · May 2024 · Moon'],
+      [3, 'Level 3 · Oct 2024 · Moon'],
+      [4, 'Level 4 · May 2024 · Mars']
     ];
     CC.overlay('<p class="kicker">Base: ' + CC.SITES[CC.G.site].name + ' · Total stars ' + total + ' of 12</p>' +
       '<h2 class="big mid">Choose a storm</h2>' +
-      '<div class="levels">' + lv.map(function (l) { return '<button class="lvbtn" type="button" id="' + l[0] + '"><span>' + l[1] + '</span><b>' + CC.stars(l[2]) + '</b></button>'; }).join('') + '</div>' +
-      '<div class="row"><button class="go alt sm" type="button" id="lvLive">Today’s real Sun (LIVE)</button><button class="go alt sm" type="button" id="lvAbout">About the data</button><button class="go alt sm" type="button" id="lvSite">Change site</button></div>' +
-      (S.l1 ? '' : '<p class="credit">Tip: start with Level 1. It teaches the basics.</p>'));
-    $('lv1').onclick = CC.level1; $('lv2').onclick = CC.level2; $('lv3').onclick = CC.level3; $('lv4').onclick = CC.level4;
+      '<div class="levels">' + lv.map(function (l) {
+        var open = CC.unlocked(l[0]);
+        return '<button class="lvbtn' + (open ? '' : ' locked') + '" type="button" id="lv' + l[0] + '"' + (open ? '' : ' disabled aria-disabled="true"') + '><span>' + l[1] +
+          (open ? '' : '<small>Pass Level ' + (l[0] - 1) + ' to unlock</small>') + '</span><b>' + (open ? CC.stars(S['l' + l[0]]) : '🔒') + '</b></button>';
+      }).join('') + '</div>' +
+      '<div class="row"><button class="go alt sm" type="button" id="lvLive">Today’s real Sun (LIVE)</button><button class="go alt sm" type="button" id="lvAbout">About the data</button><button class="go alt sm" type="button" id="lvSite">Change site</button>' +
+      (total ? '<button class="go alt sm" type="button" id="lvReset">Start over</button>' : '') +
+      (CC.allPassed() ? '<button class="go alt sm" type="button" id="lvCert">My certificate</button>' : '') + '</div>' +
+      '<div id="resetAsk"></div>' +
+      (S.l1 ? '' : '<p class="credit">Start with Level 1. Pass a level to open the next one.</p>'));
+    [1, 2, 3, 4].forEach(function (n) { if (CC.unlocked(n)) $('lv' + n).onclick = CC['level' + n]; });
     $('lvLive').onclick = CC.liveScreen; $('lvAbout').onclick = CC.aboutScreen;
     $('lvSite').onclick = function () { CC.hideOverlays(); CC.World.shot('site'); CC.siteScreen(); };
-    CC.pointAt($(S.l1 ? (S.l2 ? (S.l3 ? 'lv4' : 'lv3') : 'lv2') : 'lv1'));
+    if ($('lvCert')) $('lvCert').onclick = CC.certificate;
+    if ($('lvReset')) $('lvReset').onclick = askReset;
+    var next = [1, 2, 3, 4].filter(function (n) { return CC.unlocked(n) && !S['l' + n]; })[0];
+    if (next) CC.pointAt($('lv' + next));
   };
+
+  /* Start over: asked on the page itself (browser confirm boxes are not used). */
+  function askReset() {
+    CC.hideArrow();
+    $('resetAsk').innerHTML = '<div class="ask"><p>Erase all your stars and start again from the beginning?</p><div class="row">' +
+      '<button class="go sm" type="button" id="rsYes">Yes, start over</button><button class="go alt sm" type="button" id="rsNo">No, keep my stars</button></div></div>';
+    $('rsYes').onclick = function () {
+      for (var k in CC.SAVE) CC.SAVE[k] = 0;
+      CC.saveStars(); CC.hush(); CC.startGame();
+    };
+    $('rsNo').onclick = function () { $('resetAsk').innerHTML = ''; };
+    $('rsNo').focus();
+  }
 
   /* opts: lvl, media (html), fact (html), win, lose, factLine, powerNeed, next ([label, fn]) */
   CC.debrief = function (o) {
@@ -48,10 +75,14 @@
       '<div class="score"><b>Your game points</b><span>Dose ' + Math.round(G.dose) + ' (limit ' + G.limit + ')</span><span>Power ' + Math.max(0, Math.round(G.power)) + '</span><span>Mission ' + G.mission + ' of ' + G.goal + '</span><em>Game points come from your choices. They are not real measurements.</em></div>' +
       '<p class="tip"><b>SOL:</b> ' + tip + '</p>' +
       '<div class="real"><b>What really happened · real NASA data</b>' + o.fact + '</div>' +
-      '<div class="row"><button class="go" type="button" id="again">Play again</button><button class="go alt" type="button" id="nextB">' + o.next[0] + '</button></div></div></div>');
+      '<div class="row">' + (safe ? '<button class="go" type="button" id="nextB">' + o.next[0] + '</button><button class="go alt" type="button" id="again">Play again</button>'
+        : '<button class="go" type="button" id="again">Try again</button>') +
+      '<button class="go alt" type="button" id="menuB">All levels</button></div>' +
+      (safe ? '' : '<p class="credit">Get the crew home safe to unlock the next level.</p>') + '</div></div>');
     ov.querySelectorAll('video').forEach(function (v) { try { v.play(); } catch (e) { /* ignore */ } });
     $('again').onclick = function () { CC.hush(); CC['level' + o.lvl](); };
-    $('nextB').onclick = function () { CC.hush(); o.next[1](); };
+    if ($('nextB')) $('nextB').onclick = function () { CC.hush(); o.next[1](); };
+    $('menuB').onclick = function () { CC.hush(); CC.levelMenu(); };
     if (CC.Sol) CC.Sol.mood(safe ? 'cheer' : 'worry');
     CC.World.shot('wide');
     CC.say([safe ? o.win : o.lose, o.factLine]);

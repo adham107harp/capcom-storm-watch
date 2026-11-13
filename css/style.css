@@ -120,6 +120,10 @@ a { color: var(--data); }
 .levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 860px; }
 .lvbtn { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: start; background: var(--paper); color: var(--ink); border: 4px solid var(--ink); border-radius: 14px; padding: 12px 14px; min-height: 64px; cursor: pointer; box-shadow: 5px 5px 0 var(--ink); font-family: var(--f-hud); font-weight: 700; font-size: 21px; animation: rise .45s both; }
 .lvbtn b { color: #d99a00; font-size: 22px; letter-spacing: 2px; }
+.lvbtn small { display: block; font-size: 14px; font-weight: 600; color: #4b5270; }
+.lvbtn.locked { background: #c9cbd3; color: #3b4258; cursor: not-allowed; box-shadow: 3px 3px 0 var(--ink); animation: none; }
+.ask { background: var(--paper); color: var(--ink); border: 4px solid var(--ink); border-radius: 14px; padding: 12px 14px; max-width: 560px; box-shadow: 5px 5px 0 var(--dose); display: flex; flex-direction: column; gap: 10px; }
+.ask p { margin: 0; font-weight: 700; }
 .lvbtn:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 var(--ink); }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
