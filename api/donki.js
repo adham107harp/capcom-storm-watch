@@ -37,12 +37,12 @@ module.exports = async function handler(req, res) {
     const [cme, sep, gst] = await Promise.all([getJSON('CME', p), getJSON('SEP', p), getJSON('GST', p)]);
     const out = {
       fetched: end.toISOString(),
-      cme: (Array.isArray(cme) ? cme : []).map(c => ({ time: String(c.startTime || ''), speed: cmeSpeed(c) })).slice(-60),
-      sep: (Array.isArray(sep) ? sep : []).map(s => ({ time: String(s.eventTime || '') })).slice(-30),
+      cme: (Array.isArray(cme) ? cme : []).map(c => ({ time: String(c.startTime || ''), speed: cmeSpeed(c) })),
+      sep: (Array.isArray(sep) ? sep : []).map(s => ({ time: String(s.eventTime || '') })),
       gst: (Array.isArray(gst) ? gst : []).map(g => {
         const kps = (g.allKpIndex || []).map(k => Number(k.kpIndex)).filter(n => !isNaN(n));
         return { time: String(g.startTime || ''), kp: kps.length ? Math.max.apply(null, kps) : null };
-      }).slice(-30)
+      })
     };
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.status(200).json(out);
