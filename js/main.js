@@ -33,6 +33,13 @@
     CC.initSol();
     CC.World.setSite('sunny');
     CC.title();
+    /* Opened straight from disk: browsers block the 3D model and Moon maps on file:// pages. */
+    if (location.protocol === 'file:' && !window.CC_EMBED) {
+      var n = document.createElement('p');
+      n.className = 'honest';
+      n.textContent = 'Opened from a file, so the 3D Moon and SOL cannot load. Run a local server (python -m http.server) or open capcom-storm-watch-offline.html.';
+      $('ovTitle').appendChild(n);
+    }
     requestAnimationFrame(tick);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
