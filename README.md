@@ -5,6 +5,13 @@ Kids aged 7–12 play CAPCOM, the person who talks to the crew by radio. Real sp
 (solar storms on the Moon, a planet-wide dust storm on Mars) hits imagined bases. Players weigh radiation shielding, power, food, communication delay
 and mission goals, and every choice has a cost.
 
+**Play it:** https://capcom-storm-watch.vercel.app/
+
+![Title screen](docs/screenshots/title.jpg)
+![Level 1](docs/screenshots/level1.jpg)
+![Level 3, NASA forecast map](docs/screenshots/level3.jpg)
+![Level 4, Mars dust storm](docs/screenshots/mars.jpg)
+
 | Level | Real event (NASA DONKI) | What the player learns |
 |---|---|---|
 | 0 | Real Moon (LRO colour + LOLA elevation), the nine Artemis III south-pole regions | Choosing a base site: sunlight and power vs. ice vs. easy landing and radio |
@@ -83,3 +90,15 @@ Or from a terminal in this folder: `npx vercel` (first time), set the variable w
 ## Data and credits
 
 See [CREDITS.md](CREDITS.md). NASA does not endorse this game.
+
+## Use of AI
+
+Code and text were written with Claude (Anthropic); the voices are AI-generated with Kokoro TTS. Full details: [AI_USE.md](AI_USE.md).
+
+## Licence
+
+Code: MIT, see [LICENSE](LICENSE). NASA images and videos keep their own terms (see [CREDITS.md](CREDITS.md)).
+
+## Team
+
+Badya University, NASA Space Apps Challenge 2026.
